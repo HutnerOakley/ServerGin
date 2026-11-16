@@ -2,13 +2,17 @@ package main
 
 import (
 	"ServeGin/internal/core"
-	"fmt"
+	"ServeGin/internal/flags"
+	"ServeGin/internal/global"
 )
 
 /*
 入口
 */
 func main() {
-	cfg := core.ReadConfig()
-	fmt.Println(cfg.DB)
+	// 日志初始化
+	core.InitLogger()
+	flags.Run()
+	global.Config = core.ReadConfig()
+
 }
