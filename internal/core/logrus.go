@@ -94,7 +94,7 @@ func (hook *MyHook) Fire(entry *logrus.Entry) error {
 	defer hook.mu.Unlock()
 
 	msg, _ := entry.String()
-	date := entry.Time.Format("2006-01-02-15-04")
+	date := entry.Time.Format("2006-01-02")
 	if hook.date != date {
 		// 换时间
 		err := hook.rotateFiles(date)

@@ -1,0 +1,11 @@
+db:
+  model: sqlite
+  db_name: ""
+  host:
+  port:
+  user:
+  password:
+redis:
+  addr: ""
+  password: ""
+  db: 1

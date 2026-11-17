@@ -1,20 +1,27 @@
 package core
 
 import (
-	"ServeGin/internal/config"
+	"ServeGin/internal/global"
 	"context"
 
 	"github.com/redis/go-redis/v9"
 	"github.com/sirupsen/logrus"
 )
 
-func InitRedis() {
-	var conf config.Redis
+/*
+redis初始化
+*/
+func InitRedis() (client *redis.Client) {
+	cfg := global.Config.Redis
+	if cfg.Addr == "" {
+		logrus.Warnf("未配置redis连接")
+		return
+	}
 	// 初始化配置
 	rdb := redis.NewClient(&redis.Options{
-		Addr:     conf.Addr,
-		Password: conf.Password,
-		DB:       conf.DB,
+		Addr:     cfg.Addr,
+		Password: cfg.Password,
+		DB:       cfg.DB,
 	})
 	// 建立连接
 	_, err := rdb.Ping(context.Background()).Result()
@@ -23,4 +30,5 @@ func InitRedis() {
 		return
 	}
 	logrus.Infof("redis连接成功")
+	return rdb
 }

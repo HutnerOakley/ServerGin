@@ -1,0 +1,11 @@
+db:
+  model: pgsql
+  db_name: ""
+  host: 127.0.0.1
+  port: 3306
+  user: dev_db
+  password: dev_db123
+redis:
+  addr: ""
+  password: ""
+  db: 1
