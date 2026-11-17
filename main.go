@@ -14,5 +14,4 @@ func main() {
 	core.InitLogger()
 	flags.Run()
 	global.Config = core.ReadConfig()
-
 }
