@@ -7,6 +7,8 @@ import (
 	"gorm.io/gorm"
 )
 
+const Version = "0.0.1"
+
 /*
 全局变量
 */
