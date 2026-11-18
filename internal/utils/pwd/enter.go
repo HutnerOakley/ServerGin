@@ -16,7 +16,7 @@ func GenerateHashPassword(password string) (string, error) {
 }
 
 /*
-验证密码跟密码是否匹配
+验证密码是否匹配
 */
 func CompareHashAndPassword(hashPassword string, password string) bool {
 	err := bcrypt.CompareHashAndPassword([]byte(hashPassword), []byte(password))

@@ -4,6 +4,7 @@ import (
 	"ServeGin/internal/core"
 	"ServeGin/internal/flags"
 	"ServeGin/internal/global"
+	"ServeGin/internal/routers"
 )
 
 /*
@@ -22,5 +23,8 @@ func main() {
 	global.Redis = core.InitRedis()
 	// 执行迁移
 	flags.Run()
+
+	// 运行web服务
+	routers.Run()
 
 }
