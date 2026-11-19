@@ -2,6 +2,7 @@ package middleware
 
 import (
 	"ServeGin/internal/utils/res"
+	"sync"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -14,6 +15,7 @@ type Limiter struct {
 	limit      int                // 限制的请求数量
 	duration   time.Duration      // 时间窗口
 	timestamps map[string][]int64 // 请求的时间戳
+	mu         sync.Mutex         // 锁
 }
 
 /*
@@ -33,6 +35,9 @@ func NewLimiter(limiter int, duration time.Duration) *Limiter {
 func (l *Limiter) LimitMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		ip := c.ClientIP() // 获取客户端ip
+
+		l.mu.Lock() // 加锁
+		defer l.mu.Unlock()
 
 		// 检查请求时间戳切片是否存在
 		if _, ok := l.timestamps[ip]; !ok {

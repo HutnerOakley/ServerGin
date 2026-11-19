@@ -13,6 +13,7 @@ import (
 */
 func UserRouter(g *gin.RouterGroup) {
 	userApi := api.App.UserApi
+	// 登录限流
 	loginLimiter := middleware.NewLimiter(5, time.Minute)
 
 	g.POST("users/login", loginLimiter.LimitMiddleware(), userApi.LoginView)
