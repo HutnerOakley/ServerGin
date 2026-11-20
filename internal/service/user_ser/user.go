@@ -3,9 +3,12 @@ package user_ser
 import (
 	"ServeGin/internal/global"
 	"ServeGin/internal/models"
+	"ServeGin/internal/service/redis_service"
+	"ServeGin/internal/utils/jwts"
 	"ServeGin/internal/utils/pwd"
 	"context"
 	"errors"
+	"time"
 )
 
 type UserService struct {
@@ -36,4 +39,28 @@ func (s *UserService) Login(ctx context.Context, username, password string) (*mo
 		return nil, errors.New("用户名或密码错误")
 	}
 	return &user, nil
+}
+
+/*
+用户退出登录Service
+*/
+func (s *UserService) Logout(ctx context.Context, token string) error {
+
+	if ctx == nil {
+		ctx = context.Background()
+	}
+
+	// 1.验证token
+	claims, err := jwts.ParseToken(token)
+	if err != nil {
+		return err
+	}
+
+	// 2.放入redis的黑名单
+	sub := claims.ExpiresAt.Sub(time.Now())
+	err = redis_service.AddTokenBlacklist(ctx, token, sub)
+	if err != nil {
+		return err
+	}
+	return nil
 }

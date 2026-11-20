@@ -17,5 +17,6 @@ func UserRouter(g *gin.RouterGroup) {
 	loginLimiter := middleware.NewLimiter(5, time.Minute)
 
 	g.POST("users/login", loginLimiter.LimitMiddleware(), userApi.LoginView)
+	g.POST("/users/logout", middleware.JWTAuthMiddleware(), userApi.LogoutView)
 	g.GET("users", middleware.JWTAuthMiddleware(), userApi.UserList)
 }

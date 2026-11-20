@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"ServeGin/internal/service/redis_service"
 	"ServeGin/internal/utils/jwts"
 	"ServeGin/internal/utils/res"
 	"strings"
@@ -25,6 +26,19 @@ func JWTAuthMiddleware() gin.HandlerFunc {
 		parts := strings.SplitN(authHeader, " ", 2)
 		if len(parts) != 2 || parts[0] != "Bearer" {
 			res.FailWithMsg("Authorization 格式错误", c)
+			c.Abort()
+			return
+		}
+
+		// 检查token是否在黑名单
+		black, err := redis_service.HasTokenBlacklist(c.Request.Context(), parts[1])
+		if err != nil {
+			res.FailWithMsg("认证失败", c)
+			c.Abort()
+			return
+		}
+		if black {
+			res.FailWithMsg("token已失效", c)
 			c.Abort()
 			return
 		}
