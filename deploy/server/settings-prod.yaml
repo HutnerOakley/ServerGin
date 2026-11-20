@@ -1,0 +1,19 @@
+db:
+    mode: mysql # mysql pgsql sqlite
+    db_name: server_db
+    host: 10.2.0.2
+    port: 3306
+    user: fast
+    password: fast123
+redis:
+    addr: 10.2.0.3:6379
+    password: ""
+    db: 1
+system:
+    mode: release # debug release
+    ip: 0.0.0.0
+    port: 8088
+jwt:
+    expires: 8 # 单位小时
+    issuer: hunter
+    secret: 60xJghLBSDXXRrqvb+9KHYD6f9Z6xVsrZfpok/vZCm/AyNKAn71c4a5Ck8TOiKbGWpIoOE/hjOvQMqkl0F5yyw==

@@ -26,7 +26,7 @@ var Options FlagOptions
 操作命令行,实现读取配置文件,版本，迁移数据库
 */
 func Parse() {
-	flag.StringVar(&Options.File, "f", "settings.yaml", "配置文件路径")
+	flag.StringVar(&Options.File, "f", "settings-prod.yaml", "配置文件路径")
 	flag.StringVar(&Options.Menu, "m", "", "菜单 user")
 	flag.StringVar(&Options.Type, "t", "", "操作类型 create list")
 	flag.BoolVar(&Options.Version, "v", false, "打印当前版本")
